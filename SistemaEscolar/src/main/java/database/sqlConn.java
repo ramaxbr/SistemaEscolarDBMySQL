@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 
 public class sqlConn {
-    private static final String url = "jdbc:mysql://localhost:3306/?user=root/senai_escolarbd";
+    private static final String url = "jdbc:mysql://localhost:3306/sistema_escolarbd";
     private static final String user = "root";
     private static final String pws = "Senai@134";
 
@@ -14,7 +14,7 @@ public class sqlConn {
 
     public static void testConnection(){
         try(Connection conn = getConnection()){
-            System.out.println("A conexão foi estabelecida!" + conn);
+            System.out.println("A conexão foi estabelecida! " + conn + "\n");
         }catch (SQLException errorSQL){
             System.out.println("Falha na conexão" + errorSQL.getMessage());
             System.out.println("Verifique: ");

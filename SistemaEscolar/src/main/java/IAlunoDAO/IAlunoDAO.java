@@ -18,5 +18,7 @@ public interface IAlunoDAO {
     //D - > Delete
     void excluirAluno(int id);
 
+    List<Aluno> listarID();
+
 
 }
