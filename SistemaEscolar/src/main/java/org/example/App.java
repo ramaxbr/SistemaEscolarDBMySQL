@@ -5,6 +5,7 @@ import model.Aluno;
 import daoImplements.AlunoDAOImplements;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Optional;
 
 /**
  * Hello world!
@@ -39,6 +40,39 @@ public class App
                     break;
                 case 2:
                     System.out.println("Atualizar aluno.");
+
+                    int idAluno = sc.nextInt();
+                    sc.nextLine();
+
+                    Optional<Aluno> opcionalAluno = alunoDAOImplements.buscarPorId(idAluno);
+
+                   if(opcionalAluno.isPresent()){
+                       Aluno aluno = opcionalAluno.get();
+
+                       System.out.println("Digite o nome: ");
+                       String nomeAluno = sc.nextLine();
+                       aluno.setNome(nomeAluno);
+
+                       System.out.println("Digite o CPF: ");
+                       String cpfAtualizarAluno = sc.nextLine();
+                       aluno.setNome(cpfAtualizarAluno);
+
+                       System.out.println("Digite o email: ");
+                       String emailAtualizarAluno = sc.nextLine();
+                       aluno.setEmail(emailAtualizarAluno);
+
+                       System.out.println("Digite nascimento: ");
+                       String atualizarData = sc.nextLine();
+                       LocalDate dataNascimento = LocalDate.parse(atualizarData);
+
+                       System.out.println("Digite o telefone: ");
+                       String atualizarTelefone = sc.nextLine();
+
+
+                       alunoDAOImplements.atualizarAluno(aluno);
+                   }else {
+                       System.out.println("Erro");
+                   }
                     break;
                 case 3:
                     System.out.println("Excluir aluno.");
@@ -57,16 +91,16 @@ public class App
                     }
                     break;
                 case 5:
+                    System.out.println("Selecione o ID do aluno que queira listar.");
+                    int idAluno = sc.nextInt();
+                    sc.nextLine();
 
+                    System.out.println(alunoDAOImplements.buscarPorId(idAluno));
                     break;
-
-
                 case 0:
                     opcao = 0;
                     break;
             }
-
-
         }while (opcao != 0);
     }
 }

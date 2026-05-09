@@ -4,6 +4,8 @@ import model.Aluno;
 
 import java.util.List;
 
+import java.util.Optional;
+
 public interface IAlunoDAO {
     //Crud
     //C -> create
@@ -18,7 +20,7 @@ public interface IAlunoDAO {
     //D - > Delete
     void excluirAluno(int id);
 
-    List<Aluno> listarID();
+    Optional<Aluno> buscarPorId(int id);
 
 
 }
