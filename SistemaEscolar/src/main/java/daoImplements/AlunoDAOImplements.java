@@ -52,24 +52,27 @@ public class AlunoDAOImplements implements IAlunoDAO {
 
     @Override
     public void atualizarAluno(Aluno aluno) {
-        String sql = "UPDATE aluno SET nome = ?, cpf = ?, email = ?, data_nascimento = ?, telefone = ?";
+
+        String sql = "UPDATE aluno SET nome = ?, cpf = ?, email = ?, telefone = ? WHERE idAluno = ?";
+
         try(Connection conn = sqlConn.getConnection()){
-        PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
-        stmt.setString(1, aluno.getNome());
-        stmt.setString(2, aluno.getCpf());
-        stmt.setString(3, aluno.getEmail());
-        stmt.setDate(4, java.sql.Date.valueOf(aluno.getData_Nascimento()));
-        stmt.setString(5, aluno.getTelefone());
-        stmt.setInt(6, aluno.getId());
+           stmt.setString(1, aluno.getNome());
+           stmt.setString(2, aluno.getCpf());
+           stmt.setString(3, aluno.getEmail());
+           stmt.setString(4, aluno.getTelefone());
+           stmt.setInt(5, aluno.getId());
+           stmt.executeUpdate();
 
-        stmt.executeUpdate();
+           System.out.println("Atualizado com sucesso!");
 
-            System.out.println("Aluno atualizado com sucesso!");
-
-        }catch (SQLException e){
-            System.out.println("Falha em atualizar o nome.");
+        }catch (SQLException errorSql){
+            throw new RuntimeException("Erro ao atualizar o sql", errorSql);
         }
+
+
+
     }
 
     @Override

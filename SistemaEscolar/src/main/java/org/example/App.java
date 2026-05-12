@@ -3,6 +3,8 @@ package org.example;
 import database.sqlConn;
 import model.Aluno;
 import daoImplements.AlunoDAOImplements;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Optional;
@@ -40,39 +42,15 @@ public class App
                     break;
                 case 2:
                     System.out.println("Atualizar aluno.");
+                    AlunoDAOImplements DAOAluno = new AlunoDAOImplements();
 
-                    int idAluno = sc.nextInt();
-                    sc.nextLine();
+                    LocalDate data = LocalDate.parse("2000-02-20");
 
-                    Optional<Aluno> opcionalAluno = alunoDAOImplements.buscarPorId(idAluno);
+                    Aluno updateAluno = new Aluno(1, "teste", "cpf","teste@gmail.com", data, "11956567263" );
 
-                   if(opcionalAluno.isPresent()){
-                       Aluno aluno = opcionalAluno.get();
-
-                       System.out.println("Digite o nome: ");
-                       String nomeAluno = sc.nextLine();
-                       aluno.setNome(nomeAluno);
-
-                       System.out.println("Digite o CPF: ");
-                       String cpfAtualizarAluno = sc.nextLine();
-                       aluno.setNome(cpfAtualizarAluno);
-
-                       System.out.println("Digite o email: ");
-                       String emailAtualizarAluno = sc.nextLine();
-                       aluno.setEmail(emailAtualizarAluno);
-
-                       System.out.println("Digite nascimento: ");
-                       String atualizarData = sc.nextLine();
-                       LocalDate dataNascimento = LocalDate.parse(atualizarData);
-
-                       System.out.println("Digite o telefone: ");
-                       String atualizarTelefone = sc.nextLine();
+                   DAOAluno.atualizarAluno(updateAluno);
 
 
-                       alunoDAOImplements.atualizarAluno(aluno);
-                   }else {
-                       System.out.println("Erro");
-                   }
                     break;
                 case 3:
                     System.out.println("Excluir aluno.");
