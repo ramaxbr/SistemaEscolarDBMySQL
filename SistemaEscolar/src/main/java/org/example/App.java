@@ -39,6 +39,15 @@ public class App
             switch (opcao){
                 case 1:
                     System.out.println("Cadastro de aluno.");
+
+                    AlunoDAOImplements DAOAlunoCadastrar = new AlunoDAOImplements();
+
+                        LocalDate cadastrarData = LocalDate.parse("2000-02-19");
+
+                    Aluno cadastrarAluno = new Aluno("testeCadastrar", "CPFCadastrar", "cadastrar@gmail.com", cadastrarData, "11974638267");
+
+                    DAOAlunoCadastrar.salvarAluno(cadastrarAluno);
+
                     break;
                 case 2:
                     System.out.println("Atualizar aluno.");
@@ -54,6 +63,24 @@ public class App
                     break;
                 case 3:
                     System.out.println("Excluir aluno.");
+                    System.out.println("Digite o ID do aluno que deseja excluir: ");
+                    int idDeletar = sc.nextInt();
+                    sc.nextLine();
+
+                    Optional<Aluno> alunoParaDeletar = alunoDAOImplements.buscarPorId(idDeletar);
+
+                    List<Aluno> listarAluno = alunoDAOImplements.listarTodosAlunos();
+
+                    for(Aluno listar : listarAluno){
+                        System.out.println(listar);
+                    }
+
+                    if(alunoParaDeletar == null){
+                        System.out.println("Aluno não encontrado!");
+                        break;
+                    }
+                    Aluno alunoDel = alunoParaDeletar.get();
+
                     break;
                 case 4:
                     System.out.println("Listar Aluno");

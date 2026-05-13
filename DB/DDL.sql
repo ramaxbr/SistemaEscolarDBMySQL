@@ -62,8 +62,6 @@ CREATE TABLE turma(
     CONSTRAINT fk_turma_inst FOREIGN KEY (instituicao_id) REFERENCES instituicao(idInstituicao),
 	CONSTRAINT fk_turma_prof FOREIGN KEY (professor_id) REFERENCES professor(idProfessor)
 );
-SELECT * FROM turma
--- 5 MATRICULA
 
 CREATE TABLE matricula(
 	idMatricula int auto_increment primary key,
@@ -79,3 +77,12 @@ CREATE TABLE matricula(
 	CONSTRAINT fk_mat_turma FOREIGN KEY (turma_id)
 		REFERENCES turma(idTurma)
 );
+
+-- Para realizar o delete no banco.
+ALTER TABLE matricula DROP FOREIGN KEY fk_mat_aluno;
+
+ALTER TABLE matricula ADD CONSTRAINT fk_mat_aluno FOREIGN KEY (aluno_id) REFERENCES aluno(idAluno) ON DELETE CASCADE;
+
+ALTER TABLE matricula DROP FOREIGN KEY fk_mat_turma;
+
+ALTER TABLE matricula ADD CONSTRAINT fk_mat_turma FOREIGN KEY (turma_id) REFERENCES turma(idTurma) ON DELETE CASCADE;

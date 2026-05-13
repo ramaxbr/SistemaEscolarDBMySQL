@@ -5,8 +5,7 @@ import IAlunoDAO.IAlunoDAO;
 import java.sql.PreparedStatement;
 import database.sqlConn;
 import model.Aluno;
-
-import javax.xml.transform.Result;
+import java.sql.*;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import java.sql.Connection;
@@ -14,12 +13,34 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
+
 public class AlunoDAOImplements implements IAlunoDAO {
     //sqlConn sqlConn = new sqlConn();
 
     @Override
     public void salvarAluno(Aluno aluno) {
+    String sql = "INSERT INTO aluno (nome, cpf, email, data_nascimento, telefone) VALUES (?, ?, ?, ?, ?)";
+           try(Connection conn = sqlConn.getConnection()) {
+               PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
+               stmt.setString(1, aluno.getNome());
+               stmt.setString(2, aluno.getCpf());
+               stmt.setString(3, aluno.getEmail());
+               stmt.setDate(4, Date.valueOf(aluno.getData_Nascimento()));
+               stmt.setString(5, aluno.getTelefone());
+
+               ResultSet chavepk = stmt.getGeneratedKeys();
+
+               if (chavepk.next()) {
+                   aluno.setId(chavepk.getInt(1));
+               }
+
+               stmt.executeUpdate();
+               System.out.println("Aluno cadastrado com sucesso!");
+
+           }catch (SQLException e){
+               throw new RuntimeException("Erro ao cadastrar" + e.getMessage());
+           }
     }
 
     @Override
@@ -76,7 +97,19 @@ public class AlunoDAOImplements implements IAlunoDAO {
     }
 
     @Override
-    public void excluirAluno(int id) {
+    public void excluirAluno(Aluno aluno) {
+        String sql = "DELETE FROM aluno WHERE idAluno = ?";
+
+        try (Connection conn = sqlConn.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, aluno.getId());
+            stmt.executeUpdate();
+
+            System.out.println("Aluno excluído com sucesso!");
+        }catch (SQLException error){
+            System.out.println("Erro ao excluir aluno: " + error.getMessage());
+        }
     }
 
     @Override
