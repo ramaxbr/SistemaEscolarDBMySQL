@@ -21,6 +21,4 @@ public interface IAlunoDAO {
     void excluirAluno(Aluno aluno);
 
     Optional<Aluno> buscarPorId(int id);
-
-
 }
